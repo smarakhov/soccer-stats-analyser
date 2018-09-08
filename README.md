@@ -20,7 +20,14 @@ https://travis-ci.org/smarakhov/soccer-stats-analyser
 https://trello.com/b/kOwcsnbX/soccer-stats-analyser
 
 ## To run tests 
-`gradle clean test`
+`gradle clean check`
+
+### With coverage
+`gradle clean check jacocoTestReport jacocoTestCoverageVerification`
+
+This will generate following reports:
+- coverage report in `./build/reports/jacoco/test/html/index.html`
+- test report in `./build/reports/tests/test/index.html`  
 
 ## To run application 
 `./gradlew run --args="./src/main/resources/match-events.csv 00:11"`

@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.function.Supplier;
 
 @Slf4j
 @AllArgsConstructor
@@ -15,6 +16,11 @@ public class Application {
   private static final String TITLE = "Soccer Match Stats Analyser";
 
   private ParserService parserService;
+
+  /**
+   * Used by unit tests to test application generation logic
+   */
+  private static Supplier<Application> applicationSupplier = () -> new Application(new ParserService());
 
   void runAnalyser(String inputFilename, String timestamp, String outputFilename) throws IOException {
     log.debug("runAnalyser({}, {}, {})", inputFilename, timestamp, outputFilename);
@@ -34,7 +40,7 @@ public class Application {
     }
 
     try {
-      new Application(new ParserService()).runAnalyser(args[0], args[1], args.length > 2 ? args[2] : null);
+      applicationSupplier.get().runAnalyser(args[0], args[1], args.length > 2 ? args[2] : null);
     } catch (IOException ioException) {
       log.error("Error while parsing the file [{}]: {}", args[0], ioException.getMessage());
       System.exit(1);
@@ -44,5 +50,13 @@ public class Application {
   private static void printUsage() {
     System.out.printf("%s usage:\n", TITLE);
     System.out.printf("\tjava %s <input-filename> <timestamp> [output-filename]\n", Application.class.getName());
+  }
+
+  /**
+   * Unit tests need to supply application instance.
+   * @param supplier Provides application instance for unit tests
+   */
+  static void setApplicationSupplier(Supplier<Application> supplier) {
+    applicationSupplier = supplier;
   }
 }
