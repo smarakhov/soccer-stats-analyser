@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/smarakhov/soccer-stats-analyser.svg?branch=master)](https://travis-ci.org/smarakhov/soccer-stats-analyser)
+
 # soccer-stats-analyser
 Soccer Match Stats Analyser
 
