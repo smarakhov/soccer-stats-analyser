@@ -19,7 +19,7 @@ public class ParserServiceTest {
   private ParserService parserService;
 
   @Before
-  public void setuo() {
+  public void setup() {
     parserService = new ParserService();
   }
 

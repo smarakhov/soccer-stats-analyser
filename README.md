@@ -3,9 +3,13 @@
 # soccer-stats-analyser
 Soccer Match Stats Analyser
 
-## Assumptions
+## Assumptions - Environment
 - Java 8 (Java 9 might have a negative effect on parsing Lombok annotated classes)
 - Gradle is required. If not available, please follow <https://gradle.org/install/> to install
+
+## Assumptions - Application Requirements
+- Events are always coming in correct order 
+- After scoring a goal, there will always be a POSSESS event for the opposite team
 
 ## Questions
 - Why can't I use Spring? I like dependency injection
