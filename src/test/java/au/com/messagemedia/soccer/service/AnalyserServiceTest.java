@@ -38,7 +38,7 @@ public class AnalyserServiceTest {
   public void testAnalyse() throws ValidationException {
     // given
     List<MatchEvent> matchEvents = Arrays.asList(
-        new MatchEvent(Duration.ofSeconds(0), MatchEventType.START, "A"),
+        new MatchEvent(Duration.ZERO, MatchEventType.START, "A"),
         new MatchEvent(Duration.ofSeconds(10), MatchEventType.POSSESS, "B"),
         new MatchEvent(Duration.ofSeconds(20), MatchEventType.SHOT, "B"),
         new MatchEvent(Duration.ofSeconds(20), MatchEventType.SCORE, "B"),
@@ -68,7 +68,7 @@ public class AnalyserServiceTest {
   @Test
   public void testProcessStartEvent() {
     // given
-    MatchEvent event = new MatchEvent(Duration.ofSeconds(0), MatchEventType.START, "A");
+    MatchEvent event = new MatchEvent(Duration.ZERO, MatchEventType.START, "A");
     StatisticsAggregator aggregator = mock(StatisticsAggregator.class);
 
     // when
@@ -156,7 +156,7 @@ public class AnalyserServiceTest {
   public void testValidateMatchEvents() throws ValidationException {
     // given
     List<MatchEvent> matchEvents = ImmutableList.of(
-        new MatchEvent(Duration.ofSeconds(0), MatchEventType.START, "A"),
+        new MatchEvent(Duration.ZERO, MatchEventType.START, "A"),
         new MatchEvent(Duration.ofMinutes(1), MatchEventType.POSSESS, "B"),
         new MatchEvent(Duration.ofMinutes(45), MatchEventType.BREAK, null),
         new MatchEvent(Duration.ofMinutes(90), MatchEventType.END, "")
@@ -170,7 +170,7 @@ public class AnalyserServiceTest {
   public void testValidateMatchEventsWhenMissingTeamName() throws ValidationException {
     // given
     List<MatchEvent> matchEvents = ImmutableList.of(
-        new MatchEvent(Duration.ofSeconds(0), MatchEventType.START, null)
+        new MatchEvent(Duration.ZERO, MatchEventType.START, null)
     );
 
     expectedException.expect(ValidationException.class);
@@ -198,13 +198,13 @@ public class AnalyserServiceTest {
   public void testValidateMatchEventsWhenTooManyTeamNames() throws ValidationException {
     // given
     List<MatchEvent> matchEvents = ImmutableList.of(
-        new MatchEvent(Duration.ofSeconds(0), MatchEventType.START, "A"),
+        new MatchEvent(Duration.ZERO, MatchEventType.START, "A"),
         new MatchEvent(Duration.ofMinutes(1), MatchEventType.POSSESS, "B"),
         new MatchEvent(Duration.ofMinutes(2), MatchEventType.POSSESS, "C")
     );
 
     expectedException.expect(ValidationException.class);
-    expectedException.expectMessage("Expected 2 team names");
+    expectedException.expectMessage("Too many teams");
 
     // when
     analyserService.validateMatchEvents(matchEvents);

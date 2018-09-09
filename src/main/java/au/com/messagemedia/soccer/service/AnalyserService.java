@@ -25,7 +25,7 @@ public class AnalyserService {
     // aggregate statistics while processing events
     StatisticsAggregator statisticsAggregator = new StatisticsAggregator();
 
-    // filter by timestamp
+    // filter by timestamp and process matching events
     matchEvents.stream()
         .filter(matchEvent -> matchEvent.getTime().getSeconds() <= endTime.getSeconds())
         .forEach(matchEvent -> processEvent(matchEvent, statisticsAggregator));
@@ -73,7 +73,7 @@ public class AnalyserService {
     }
 
     if (matchEvents.stream().map(MatchEvent::getTeamName).filter(StringUtils::isNotBlank).distinct().collect(Collectors.toList()).size() != 2) {
-      throw new ValidationException("Expected 2 team names");
+      throw new ValidationException("Too many teams");
     }
   }
 

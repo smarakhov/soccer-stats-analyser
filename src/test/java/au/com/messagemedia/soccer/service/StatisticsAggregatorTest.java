@@ -49,7 +49,7 @@ public class StatisticsAggregatorTest {
 
     // then
     assertThat(statisticsAggregator.getTeamStatistics("A").getPossession(), is(Duration.ofSeconds(15)));
-    assertThat(statisticsAggregator.getTeamStatistics("B").getPossession(), is(Duration.ofSeconds(0)));
+    assertThat(statisticsAggregator.getTeamStatistics("B").getPossession(), is(Duration.ZERO));
   }
 
   @Test
@@ -63,8 +63,8 @@ public class StatisticsAggregatorTest {
     statisticsAggregator.incrementCurrentTeamPossession(Duration.ofSeconds(25));
 
     // then
-    assertThat(statisticsAggregator.getTeamStatistics("A").getPossession(), is(Duration.ofSeconds(0)));
-    assertThat(statisticsAggregator.getTeamStatistics("B").getPossession(), is(Duration.ofSeconds(0)));
+    assertThat(statisticsAggregator.getTeamStatistics("A").getPossession(), is(Duration.ZERO));
+    assertThat(statisticsAggregator.getTeamStatistics("B").getPossession(), is(Duration.ZERO));
 
   }
 }

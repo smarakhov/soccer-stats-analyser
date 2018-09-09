@@ -1,16 +1,12 @@
 package au.com.messagemedia.soccer.model;
 
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
 
 import java.time.Duration;
 
-@Getter
-@ToString
+@Data
 @AllArgsConstructor
-@EqualsAndHashCode
 public class TeamStatistics {
   private String teamName;
   private Duration possession;
@@ -19,7 +15,7 @@ public class TeamStatistics {
 
   public TeamStatistics(String teamName) {
     this.teamName = teamName;
-    possession = Duration.ofSeconds(0);
+    possession = Duration.ZERO;
     shots = 0;
     goals = 0;
   }

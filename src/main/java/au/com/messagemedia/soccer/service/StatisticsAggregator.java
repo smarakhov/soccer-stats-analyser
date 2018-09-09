@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Getter
-public class StatisticsAggregator {
+class StatisticsAggregator {
 
   @Setter
   private MatchEvent currentEvent;

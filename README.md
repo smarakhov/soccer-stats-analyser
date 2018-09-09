@@ -34,4 +34,8 @@ This will generate following reports:
 - test report in `./build/reports/tests/test/index.html`  
 
 ## To run application 
-`./gradlew run --args="./src/main/resources/match-events.csv 00:11"`
+`./gradlew run --args="<input-file> <timestamp> [output-file]"`
+
+If output file is missing, the output will go to the console: 
+- `./gradlew run --args="./src/main/resources/match-events.csv 00:11"`
+- `./gradlew run --args="./src/main/resources/match-events.csv 00:11 output.csv"`

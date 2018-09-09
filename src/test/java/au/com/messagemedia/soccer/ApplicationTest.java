@@ -3,8 +3,10 @@ package au.com.messagemedia.soccer;
 import au.com.messagemedia.soccer.ex.ValidationException;
 import au.com.messagemedia.soccer.model.MatchEvent;
 import au.com.messagemedia.soccer.model.MatchEventType;
+import au.com.messagemedia.soccer.model.TeamStatistics;
 import au.com.messagemedia.soccer.service.AnalyserService;
 import au.com.messagemedia.soccer.service.ParserService;
+import au.com.messagemedia.soccer.service.ReportService;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.ExpectedSystemExit;
@@ -16,6 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import static org.mockito.Mockito.doThrow;
@@ -35,6 +38,9 @@ public class ApplicationTest {
   @Mock
   private ParserService parserService;
 
+  @Mock
+  private ReportService reportService;
+
   @InjectMocks
   private Application application;
 
@@ -42,16 +48,22 @@ public class ApplicationTest {
   public void testRunAnalyse() throws IOException, ValidationException {
     // given
     List<MatchEvent> matchEvents = Arrays.asList(
-        new MatchEvent(Duration.ofSeconds(0), MatchEventType.START, "A"),
+        new MatchEvent(Duration.ZERO, MatchEventType.START, "A"),
         new MatchEvent(Duration.ofSeconds(10), MatchEventType.POSSESS, "B")
     );
-    when(parserService.parse("file.csv")).thenReturn(matchEvents);
+    when(parserService.parse("input.csv")).thenReturn(matchEvents);
+
+    Collection<TeamStatistics> teamStatistics = Arrays.asList(
+        new TeamStatistics("A", Duration.ofSeconds(10), 0, 0),
+        new TeamStatistics("B", Duration.ofSeconds(1), 0, 0)
+    );
+    when(analyserService.analyse(matchEvents, "00:11")).thenReturn(teamStatistics);
 
     // when
-    application.runAnalyser("file.csv", "00:11", null);
+    application.runAnalyser("input.csv", "00:11", "output.csv");
 
     // then
-    verify(analyserService).analyse(matchEvents, "00:11");
+    verify(reportService).printReport(teamStatistics, "output.csv");
   }
 
   @Test

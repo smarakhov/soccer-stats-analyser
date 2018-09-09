@@ -22,7 +22,7 @@ public class TeamStatisticsTest {
     assertThat(teamStatistics.getTeamName(), is("A"));
     assertThat(teamStatistics.getGoals(), is(0));
     assertThat(teamStatistics.getShots(), is(0));
-    assertThat(teamStatistics.getPossession(), is(Duration.ofSeconds(0)));
+    assertThat(teamStatistics.getPossession(), is(Duration.ZERO));
   }
 
   @Test
